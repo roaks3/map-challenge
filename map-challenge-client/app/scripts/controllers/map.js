@@ -11,7 +11,7 @@
 angular.module('mapChallengeClientApp')
   .controller('MapCtrl', function ($scope, $http, uiGmapGoogleMapApi) {
 
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+    $scope.map = { center: { latitude: 37.7577, longitude: -122.4376 }, zoom: 12 };
 
     $http({
       method: 'GET',
