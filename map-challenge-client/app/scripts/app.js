@@ -13,9 +13,10 @@ angular
     'ngAnimate',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'uiGmapgoogle-maps'
   ])
-  .config(function ($routeProvider, $httpProvider) {
+  .config(function ($routeProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -31,4 +32,11 @@ angular
 
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
+    uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyClcQJun2pdRiqD1ik2lqIbcLshJ3WL6QE',
+      v: '3.17',
+      libraries: 'weather,geometry,visualization'
+    });
+
   });

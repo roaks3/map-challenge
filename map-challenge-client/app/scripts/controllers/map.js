@@ -9,7 +9,9 @@
  * Controller of the mapChallengeClientApp
  */
 angular.module('mapChallengeClientApp')
-  .controller('MapCtrl', function ($scope, $http) {
+  .controller('MapCtrl', function ($scope, $http, uiGmapGoogleMapApi) {
+
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
     $http({
       method: 'GET',
@@ -23,11 +25,5 @@ angular.module('mapChallengeClientApp')
       console.log("error");
       console.log(response || "Request failed");
     });
-
-    var mapOptions = {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
-    };
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
   });
