@@ -9,10 +9,8 @@
  * Controller of the mapChallengeClientApp
  */
 angular.module('mapChallengeClientApp')
-  .controller('MapCtrl', function ($scope, $http, uiGmapGoogleMapApi) {
+  .controller('MapCtrl', function ($scope, $http, $q, uiGmapGoogleMapApi) {
 
-    $scope.hubs = [];
-    $scope.orders = [];
     $scope.map = { center: { latitude: 37.7577, longitude: -122.4376 }, zoom: 12,
       heatLayerCallback: function (layer) {
         var heatmapData = $scope.orders.map(function(order) {
@@ -22,32 +20,66 @@ angular.module('mapChallengeClientApp')
       }
     };
 
-    $http({
-      method: 'GET',
-      url: 'http://localhost:9005/hubs'
-    }).
-    success(function(response) {
-      angular.forEach(response, function(hub) {
-        $scope.hubs.push({id: hub.id, location: {longitude: hub.long, latitude: hub.lat}});
-      });
-    }).
-    error(function(response) {
-      console.log("error");
-      console.log(response || "Request failed");
-    });
+    $scope.getHubs = function() {
+      var deferred = $q.defer();
 
-    $http({
-      method: 'GET',
-      url: 'http://localhost:9005/orders'
-    }).
-    success(function(response) {
-      angular.forEach(response, function(order) {
-        $scope.orders.push({id: order.id, latlng: new google.maps.LatLng(order.latitude, order.longitude)});
+      $http({
+        method: 'GET',
+        url: 'http://localhost:9005/hubs'
+      }).
+      success(function(response) {
+        var hubs = []
+        angular.forEach(response, function(hub) {
+          hubs.push({id: hub.id, location: {longitude: hub.long, latitude: hub.lat}, selected: true});
+        });
+        deferred.resolve(hubs);
+      }).
+      error(function(response) {
+        console.log("error");
+        console.log(response || "Request failed");
+        deferred.reject(response);
       });
-    }).
-    error(function(response) {
-      console.log("error");
-      console.log(response || "Request failed");
+
+      return deferred.promise;
+    };
+
+    $scope.getOrders = function() {
+      var deferred = $q.defer();
+
+      var selected_hub_ids = $scope.hubs.filter(function(hub) {
+        return hub.selected;
+      }).map(function(hub) {
+        return hub.id;
+      });
+
+      $http({
+        method: 'POST',
+        url: 'http://localhost:9005/orders',
+        data: {hub_ids: selected_hub_ids}
+      }).
+      success(function(response) {
+        var orders = [];
+        angular.forEach(response, function(order) {
+          orders.push({id: order.id, latlng: new google.maps.LatLng(order.latitude, order.longitude)});
+        });
+        deferred.resolve(orders);
+      }).
+      error(function(response) {
+        console.log("error");
+        console.log(response || "Request failed");
+        deferred.reject(response);
+      });
+
+      return deferred.promise;
+    };
+
+    $scope.hubs = [];
+    $scope.orders = [];
+    $scope.getHubs().then(function (hubs) {
+      $scope.hubs = hubs;
+      $scope.getOrders().then(function (orders) {
+        $scope.orders = orders;
+      });
     });
 
   });

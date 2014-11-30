@@ -25,8 +25,15 @@ app.get('/hubs', function (req, res) {
   });
 });
 
-app.get('/orders', function (req, res) {
-  var cursor = orderdb.orders.find();
+app.post('/orders', function (req, res) {
+  var hub_ids = [];
+  if (req.body) {
+    if (req.body.hub_ids) {
+      hub_ids = req.body.hub_ids;
+    }
+  }
+
+  var cursor = orderdb.orders.find({hub_id: {$in: hub_ids}});
   cursor.toArray(function(err, docs) {
     res.send(docs);
   });
