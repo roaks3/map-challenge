@@ -1,4 +1,6 @@
 <ui-gmap-google-map center="map.center" zoom="map.zoom">
+  <ui-gmap-layer namespace="visualization" type="HeatmapLayer" onCreated="map.heatLayerCallback"></ui-gmap-layer>
+  </ui-gmap-layer>
   <ui-gmap-markers models="hubs" coords="'location'">
   </ui-gmap-markers>
 </ui-gmap-google-map>
