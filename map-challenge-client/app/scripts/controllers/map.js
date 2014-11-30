@@ -13,10 +13,11 @@ angular.module('mapChallengeClientApp')
 
     $scope.map = { center: { latitude: 37.7577, longitude: -122.4376 }, zoom: 12,
       heatLayerCallback: function (layer) {
+        $scope.heatmapLayer = layer;
         var heatmapData = $scope.orders.map(function(order) {
           return order.latlng;
         });
-        layer.setData(new google.maps.MVCArray(heatmapData));
+        $scope.heatmapLayer.setData(new google.maps.MVCArray(heatmapData));
       }
     };
 
@@ -30,7 +31,19 @@ angular.module('mapChallengeClientApp')
       success(function(response) {
         var hubs = []
         angular.forEach(response, function(hub) {
-          hubs.push({id: hub.id, location: {longitude: hub.long, latitude: hub.lat}, selected: true});
+          var hub = {id: hub.id, location: {longitude: hub.long, latitude: hub.lat}, selected: true, 
+            onClicked: function() {
+              hub.selected = !hub.selected;
+              $scope.getOrders().then(function (orders) {
+                $scope.orders = orders;
+                var heatmapData = $scope.orders.map(function(order) {
+                  return order.latlng;
+                });
+                $scope.heatmapLayer.setData(new google.maps.MVCArray(heatmapData));
+              });
+            }
+          };
+          hubs.push(hub);
         });
         deferred.resolve(hubs);
       }).
