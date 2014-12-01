@@ -9,19 +9,19 @@ To run this web app, you will need the following installed on the server (or loc
 
 * mongodb
 
-    brew install mongodb
+        brew install mongodb
 
 * npm
 
-    brew install npm
+        brew install npm
 
 * grunt
 
-    npm install -g grunt-cli
+        npm install -g grunt-cli
 
 * bower
 
-    npm install -g bower
+        npm install -g bower
 
 Once all of these tools are installed, you will need to start 3 processes: the database, the rest server, and the web app server.
 
