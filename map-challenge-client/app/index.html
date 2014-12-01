@@ -21,20 +21,43 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container">
+    <div class="container" ng-controller="MapCtrl">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/map">Map</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">mapChallengeClient</h3>
+        <h3 class="text-muted">map explorer</h3>
       </div>
 
-      <div ng-view=""></div>
+      <div class="row">
+        <div class="col-md-7 col-md-offset-1 mapSection">
+          <ui-gmap-google-map center="map.center" zoom="map.zoom">
+            <ui-gmap-layer namespace="visualization" type="HeatmapLayer" onCreated="map.heatLayerCallback"></ui-gmap-layer>
+            </ui-gmap-layer>
+            <ui-gmap-markers models="hubs" coords="'location'" click="'onClicked'" icon="'icon'">
+            </ui-gmap-markers>
+          </ui-gmap-google-map>
+        </div>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <div class="col-md-4 mapControlSection">
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="startPicker.date" is-open="startPicker.opened" min-date="'2014-03-01'" max-date="'2014-03-30'" close-text="Close" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="startPicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="endPicker.date" is-open="endPicker.opened" min-date="'2014-03-01'" max-date="'2014-03-30'" close-text="Close" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="endPicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-7 col-md-offset-1 statSection">
+          <h3 class="text-muted">{{totalOrders}} orders</h3>
+          <h3 class="text-muted">{{totalItems}} items</h3>
+        </div>
       </div>
     </div>
 

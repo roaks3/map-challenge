@@ -19,14 +19,6 @@ angular
   ])
   .config(function ($routeProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/map', {
-        templateUrl: 'views/about.html',
-        controller: 'MapCtrl'
-      })
       .otherwise({
         redirectTo: '/'
       });
