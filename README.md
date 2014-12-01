@@ -56,7 +56,7 @@ Now the rest server is running, which will allow the app to query the database t
 
 To start the web app server, go to the map-challenge-client directory and run the following commands:
 
-    bower install
+    bower install (choose option #3 when prompted about angular version, ^1.3.0)
     npm install
     grunt serve
 
