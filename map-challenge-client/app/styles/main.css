@@ -79,13 +79,16 @@ body {
 
 .control-label {
   padding-top: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   font-weight: 500;
+  color: #888;
 }
 
 .help {
-  padding-top: 80px;
+  padding-top: 115px;
+  padding-bottom: 10px;
   text-align: center;
+  color: rgba(152, 152, 152, 1);
 }
 
 .statSection {
@@ -94,8 +97,10 @@ body {
 
 .stat {
   font-size: 20px;
+  color: #999;
 }
 
 .statNumber {
   font-size: 32px;
+  color: #109B83;
 }
