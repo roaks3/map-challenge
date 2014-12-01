@@ -3,6 +3,8 @@ map-challenge
 
 This is a simple web app for analyzing data on a map
 
+![Screenshot](screenshot.png)
+
 ##Running
 
 To run this web app, you will need the following installed on the server (or locally):
