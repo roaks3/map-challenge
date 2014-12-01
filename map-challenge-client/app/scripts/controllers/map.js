@@ -66,6 +66,11 @@ angular.module('mapChallengeClientApp')
 
     $scope.hubClicked = function(hub) {
       hub.selected = !hub.selected;
+      if (hub.selected) {
+        hub.icon = 'images/restaurant-select.png';
+      } else {
+        hub.icon = 'images/restaurant-unselect.png';
+      }
       $scope.refreshOrders();
     };
 
@@ -79,7 +84,7 @@ angular.module('mapChallengeClientApp')
       success(function(response) {
         var hubs = []
         angular.forEach(response, function(hub) {
-          var hub = {id: hub.id, location: {longitude: hub.long, latitude: hub.lat}, selected: true, 
+          var hub = {id: hub.id, location: {longitude: hub.long, latitude: hub.lat}, selected: true, icon: 'images/restaurant-select.png', 
             onClicked: function() {
               $scope.hubClicked(hub);
             }
