@@ -71,3 +71,31 @@ body {
 .angular-google-map-container {
   height: 400px;
 }
+
+.mapControl {
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+.control-label {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-weight: 500;
+}
+
+.help {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.statSection {
+  padding-top: 40px;
+}
+
+.stat {
+  font-size: 20px;
+}
+
+.statNumber {
+  font-size: 32px;
+}

@@ -37,26 +37,38 @@
         </div>
 
         <div class="col-md-4 mapControlSection">
-          <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="startPicker.date" is-open="startPicker.opened" min-date="'2014-03-01'" max-date="'2014-03-30'" close-text="Close" />
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="startPicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-          </p>
+          <div class="mapControl">
+            <label class="control-label">START DATE</label>
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="startPicker.date" is-open="startPicker.opened" min-date="'2014-03-01'" max-date="'2014-03-30'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="startPicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
 
-          <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="endPicker.date" is-open="endPicker.opened" min-date="'2014-03-01'" max-date="'2014-03-30'" close-text="Close" />
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="endPicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-          </p>
+          <div class="mapControl">
+            <label class="control-label">END DATE</label>
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="endPicker.date" is-open="endPicker.opened" min-date="'2014-03-01'" max-date="'2014-03-30'" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="endPicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+
+          <div class="help">
+            click the <img src="images/restaurant-select.png"> icon to toggle the hub
+          </div>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-7 col-md-offset-1 statSection">
-          <h3 class="text-muted">{{totalOrders}} orders</h3>
-          <h3 class="text-muted">{{totalItems}} items</h3>
+          <div class="row">
+            <div class="col-md-3 col-md-offset-3 stat text-muted"><span class="statNumber">{{totalOrders}}</span> orders</div>
+            <div class="col-md-4 stat text-muted"><span class="statNumber">{{totalItems}}</span> items</div>
+          </div>
         </div>
       </div>
     </div>
