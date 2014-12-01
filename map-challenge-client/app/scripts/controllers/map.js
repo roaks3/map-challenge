@@ -14,7 +14,7 @@ angular.module('mapChallengeClientApp')
     $scope.map = { center: { latitude: 37.7577, longitude: -122.4376 }, zoom: 12,
       heatLayerCallback: function (layer) {
         $scope.heatmapLayer = layer;
-        $scope.refreshHeatmap();
+        $scope.refreshOrders();
       }
     };
 
@@ -22,17 +22,11 @@ angular.module('mapChallengeClientApp')
     $scope.endPicker = {date: new Date(2014, 2, 30), open: function($event) {$scope.datePickerOpen($event, $scope.endPicker)}};
 
     $scope.$watch('startPicker.date', function() {
-      $scope.getOrders().then(function (orders) {
-        $scope.orders = orders;
-        $scope.refreshHeatmap();
-      });
+      $scope.refreshOrders();
     });
 
     $scope.$watch('endPicker.date', function() {
-      $scope.getOrders().then(function (orders) {
-        $scope.orders = orders;
-        $scope.refreshHeatmap();
-      });
+      $scope.refreshOrders();
     });
 
     $scope.datePickerOpen = function($event, datePicker) {
@@ -42,7 +36,18 @@ angular.module('mapChallengeClientApp')
       datePicker.opened = true;
     };
 
+    $scope.refreshOrders = function() {
+      $scope.getOrders().then(function (orders) {
+        $scope.orders = orders;
+        $scope.refreshHeatmap();
+      });
+    };
+
     $scope.refreshHeatmap = function() {
+      if (!$scope.heatmapLayer) {
+        return;
+      }
+
       var heatmapData = $scope.orders.map(function(order) {
         return order.latlng;
       });
@@ -51,10 +56,7 @@ angular.module('mapChallengeClientApp')
 
     $scope.hubClicked = function(hub) {
       hub.selected = !hub.selected;
-      $scope.getOrders().then(function (orders) {
-        $scope.orders = orders;
-        $scope.refreshHeatmap();
-      });
+      $scope.refreshOrders();
     };
 
     $scope.getHubs = function() {
@@ -119,9 +121,6 @@ angular.module('mapChallengeClientApp')
     $scope.orders = [];
     $scope.getHubs().then(function (hubs) {
       $scope.hubs = hubs;
-      $scope.getOrders().then(function (orders) {
-        $scope.orders = orders;
-      });
     });
 
   });
