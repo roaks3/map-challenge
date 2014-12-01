@@ -18,6 +18,30 @@ angular.module('mapChallengeClientApp')
       }
     };
 
+    $scope.startPicker = {date: new Date(2014, 2, 1), open: function($event) {$scope.datePickerOpen($event, $scope.startPicker)}};
+    $scope.endPicker = {date: new Date(2014, 2, 30), open: function($event) {$scope.datePickerOpen($event, $scope.endPicker)}};
+
+    $scope.$watch('startPicker.date', function() {
+      $scope.getOrders().then(function (orders) {
+        $scope.orders = orders;
+        $scope.refreshHeatmap();
+      });
+    });
+
+    $scope.$watch('endPicker.date', function() {
+      $scope.getOrders().then(function (orders) {
+        $scope.orders = orders;
+        $scope.refreshHeatmap();
+      });
+    });
+
+    $scope.datePickerOpen = function($event, datePicker) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      datePicker.opened = true;
+    };
+
     $scope.refreshHeatmap = function() {
       var heatmapData = $scope.orders.map(function(order) {
         return order.latlng;
@@ -73,7 +97,7 @@ angular.module('mapChallengeClientApp')
       $http({
         method: 'POST',
         url: 'http://localhost:9005/orders',
-        data: {hub_ids: selected_hub_ids}
+        data: {hub_ids: selected_hub_ids, start: $scope.startPicker.date, end: $scope.endPicker.date}
       }).
       success(function(response) {
         var orders = [];

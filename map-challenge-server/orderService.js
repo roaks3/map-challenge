@@ -27,13 +27,21 @@ app.get('/hubs', function (req, res) {
 
 app.post('/orders', function (req, res) {
   var hub_ids = [];
+  var start = new Date(2014, 0, 1);
+  var end = new Date(2014, 11, 31);
   if (req.body) {
     if (req.body.hub_ids) {
       hub_ids = req.body.hub_ids;
     }
+    if (req.body.start) {
+      start = new Date(req.body.start);
+    }
+    if (req.body.end) {
+      end = new Date(req.body.end);
+    }
   }
 
-  var cursor = orderdb.orders.find({hub_id: {$in: hub_ids}});
+  var cursor = orderdb.orders.find({hub_id: {$in: hub_ids}, created_at: {$gte: start, $lt: end}});
   cursor.toArray(function(err, docs) {
     res.send(docs);
   });

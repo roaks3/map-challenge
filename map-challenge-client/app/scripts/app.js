@@ -14,7 +14,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $routeProvider
