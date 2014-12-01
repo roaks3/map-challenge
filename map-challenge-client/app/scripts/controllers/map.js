@@ -11,6 +11,9 @@
 angular.module('mapChallengeClientApp')
   .controller('MapCtrl', function ($scope, $http, $q, uiGmapGoogleMapApi) {
 
+    $scope.totalOrders = 0;
+    $scope.totalItems = 0;
+
     $scope.map = { center: { latitude: 37.7577, longitude: -122.4376 }, zoom: 12,
       heatLayerCallback: function (layer) {
         $scope.heatmapLayer = layer;
@@ -40,6 +43,13 @@ angular.module('mapChallengeClientApp')
       $scope.getOrders().then(function (orders) {
         $scope.orders = orders;
         $scope.refreshHeatmap();
+
+        $scope.totalOrders = 0;
+        $scope.totalItems = 0;
+        angular.forEach($scope.orders, function(order) {
+          $scope.totalOrders++;
+          $scope.totalItems += order.num_items;
+        });
       });
     };
 
@@ -104,7 +114,7 @@ angular.module('mapChallengeClientApp')
       success(function(response) {
         var orders = [];
         angular.forEach(response, function(order) {
-          orders.push({id: order.id, latlng: new google.maps.LatLng(order.latitude, order.longitude)});
+          orders.push({id: order.id, latlng: new google.maps.LatLng(order.latitude, order.longitude), num_items: order.num_items});
         });
         deferred.resolve(orders);
       }).
